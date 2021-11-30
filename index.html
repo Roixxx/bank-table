@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Vue Basics</title>
+	<title>Vue ToDo list</title>
 	<link rel="stylesheet" href="theme.css" />
 </head>
 
@@ -11,31 +11,40 @@
 
 	<div class="container" id="app">
 		<div class="card">
-			<h1>{{title}}</h1>
+			<h1 :style="{color: inputValue.length < 5 ? 'red' : 'blue'}">{{title}}</h1>
 
 			<div class="form-control">
-				<input type="text" :placeholder="placeholderStr" @input="inputChangeHandler" :value="inputValue" @keypress.enter="addNewNote">
+				<input type="text" :placeholder="placeholderStr" v-model="inputValue" @keypress.enter="addNewNote">
 			</div>
 
 			<h2>Inpt val: {{inputValue}}</h2>
-			<button class="btn" v-on:click="addNewNote">Добавить</button>
+			<button class="btn" @click="addNewNote">Добавить</button>
 
 			<hr>
 
 			<ul class="list" v-if="notes.length > 0">  
 				<li class="list-item" v-for="(note, index) of notes">
-					{{ note }}
+					
+					<!-- <span :class=" note.length > 5 ? 'primary' : 'bold' "> {{ note }} </span> -->
 
-					<button class="btn danger" v-on:click="delNote( index )">удалить</button>
+					<!-- <span :class=" {'primary': true, 'bold': note.length > 5 } "> {{ note }} </span> -->
+
+					<span :class="['bold', {'primary': note.length > 5}]"> {{note}} </span>
+
+					<button class="btn danger" @click="delNote( index )">удалить</button>
 				</li>
 
 				<hr>
 
-				<li>Всего заметок: {{notes.length}}</li>
+				<li>Всего заметок: {{notes.length}} | x2 {{doubleCount}}</li>
 			</ul>
 			<div v-else>Заметок нет</div>
 			
+			
 		</div>
+
+
+
 
 	</div>
 

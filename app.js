@@ -5,14 +5,12 @@ const App = {
 			title: 'Список заметок',
 			placeholderStr: 'Название заметки',
 			inputValue: '',
-			notes: ['покакать','покак123ать'],
+			notes: ['заметка 1','заметка 2'],
 		}
 	},
 
 	methods: {
-		inputChangeHandler(e) {
-			this.inputValue = e.target.value;
-		},
+
 		
 		addNewNote() {
 
@@ -23,14 +21,25 @@ const App = {
 
 		},
 
-
-
-
 		delNote(index) {
 			this.notes.splice(index, 1)
 		}
 
 	},
+
+	computed: {
+		doubleCount() {
+			return this.notes.length * 2;
+		}
+	},
+
+	watch: {
+		inputValue(val) {
+			if (val.length > 10) {
+				this.inputValue = '';
+			}
+		}
+	}
 }
 
 
