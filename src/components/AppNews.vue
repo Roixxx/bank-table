@@ -9,7 +9,9 @@
     <div v-if="isOpen">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, aliquam aperiam autem beatae debitis delectus dolore doloremque esse est eum facere labore natus, nihil obcaecati quaerat quidem, repellat sequi similique.</p>
       <app-button v-if="!wasRead" color="primary" @action="read">Прочесть новость</app-button>
+      <app-news-list :news="news"></app-news-list>
     </div>
+
 
   </div>
 </template>
@@ -17,6 +19,7 @@
 <script>
 
 import AppButton from "./AppButton";
+import AppNewsList from "./AppNewsList";
 
 export default {
   //props: ['title'],
@@ -51,7 +54,7 @@ export default {
     }
   },
 
-  components: {AppButton},
+  components: {AppNewsList, AppButton},
 }
 
 

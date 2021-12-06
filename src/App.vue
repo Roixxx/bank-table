@@ -16,13 +16,13 @@
       @read="read"
     />
 
-
   </div>
 </template>
 
 <script>
 
 import AppNews from "./components/AppNews";
+import AppNewsList from "./components/AppNewsList";
 
 export default {
 
@@ -60,9 +60,18 @@ export default {
 
   },
 
+  provide() {
+    return {
+      title: 'Список всех новостей',
+      news: this.news,
+
+    }
+  },
+
 
   components: {
     AppNews,
+    AppNewsList,
   },
 }
 </script>
