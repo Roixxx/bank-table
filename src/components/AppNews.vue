@@ -2,19 +2,23 @@
   <div class="card">
     <h2>{{ title }}</h2>
 
-    <button class="btn" @click="open">
-      {{ isOpen ? 'Закрыть': 'Открыть'}}
-    </button>
+    <app-button class="btn" @action="open">
+      {{ isOpen ? 'Закрыть': 'Открыть' }}
+    </app-button>
+
     <div v-if="isOpen">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, aliquam aperiam autem beatae debitis delectus dolore doloremque esse est eum facere labore natus, nihil obcaecati quaerat quidem, repellat sequi similique.</p>
-      <button v-if="!wasRead" class="btn primary" @click="read">Прочесть новость</button>
+      <app-button v-if="!wasRead" color="primary" @action="read">Прочесть новость</app-button>
     </div>
+
   </div>
 </template>
 
 <script>
 
-export  default {
+import AppButton from "./AppButton";
+
+export default {
   //props: ['title'],
 
   props: {
@@ -30,7 +34,7 @@ export  default {
 
   data() {
     return {
-      isOpen: false,    // Это нужно было вынести в исходный массив новостей для каждой новости
+      isOpen: false,                                    // Это нужно было вынести в исходный массив новостей для каждой новости
     }
   },
 
@@ -45,7 +49,12 @@ export  default {
       this.isOpen = false;
       this.$emit('read', this.id);
     }
-  }
+  },
+
+  components: {AppButton},
 }
+
+
+
 
 </script>

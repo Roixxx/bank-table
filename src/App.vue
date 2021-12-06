@@ -26,6 +26,8 @@ import AppNews from "./components/AppNews";
 
 export default {
 
+  emits: ['action'],
+
   data () {
     return {
       now: new Date().toLocaleDateString(),
@@ -54,7 +56,6 @@ export default {
 
       let i = this.news.findIndex( item => item.id === id );
       this.news[i].wasRead = true;
-      console.log(this.news)
     }
 
   },
@@ -65,4 +66,5 @@ export default {
   },
 }
 </script>
+
 
