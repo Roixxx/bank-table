@@ -1,9 +1,9 @@
 <template>
-  <hr>
-  <h4>{{ title }}</h4>
-  <ul>
-    <li v-for="item in news"> {{item.title}}  </li>
-  </ul>
+	<hr>
+	<h4>{{ title }}</h4>
+	<ul>
+		<li v-for="item in news"> {{ item.title }}</li>
+	</ul>
 
 </template>
 
@@ -11,7 +11,7 @@
 
 
 export default {
-  inject: ['title', 'news'],      // Получить из поля Provide
+	inject: ['title', 'news'],      // Получить из поля Provide
 }
 
 

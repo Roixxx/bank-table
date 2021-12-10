@@ -1,19 +1,21 @@
 <template>
-  <div class="card">
-    <h2>{{ title }}</h2>
+	<div class="card">
+		<h2>{{ title }}</h2>
 
-    <app-button class="btn" @action="open">
-      {{ isOpen ? 'Закрыть': 'Открыть' }}
-    </app-button>
+		<app-button class="btn" @action="open">
+			{{ isOpen ? 'Закрыть' : 'Открыть' }}
+		</app-button>
 
-    <div v-if="isOpen">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, aliquam aperiam autem beatae debitis delectus dolore doloremque esse est eum facere labore natus, nihil obcaecati quaerat quidem, repellat sequi similique.</p>
-      <app-button v-if="!wasRead" color="primary" @action="read">Прочесть новость</app-button>
-      <app-news-list :news="news"></app-news-list>
-    </div>
+		<div v-if="isOpen">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, aliquam aperiam autem beatae debitis
+				delectus dolore doloremque esse est eum facere labore natus, nihil obcaecati quaerat quidem, repellat
+				sequi similique.</p>
+			<app-button v-if="!wasRead" color="primary" @action="read">Прочесть новость</app-button>
+			<app-news-list :news="news"></app-news-list>
+		</div>
 
 
-  </div>
+	</div>
 </template>
 
 <script>
@@ -22,42 +24,40 @@ import AppButton from "./AppButton";
 import AppNewsList from "./AppNewsList";
 
 export default {
-  //props: ['title'],
+	//props: ['title'],
 
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    id: Number,
-    wasRead: Boolean,
-  },
+	props: {
+		title: {
+			type: String,
+			required: true,
+		},
+		id: Number,
+		wasRead: Boolean,
+	},
 
-  emits: ['opened', 'read'],                           // Для других разрабов
+	emits: ['opened', 'read'],                           // Для других разрабов
 
-  data() {
-    return {
-      isOpen: false,                                    // Это нужно было вынести в исходный массив новостей для каждой новости
-    }
-  },
+	data() {
+		return {
+			isOpen: false,                                    // Это нужно было вынести в исходный массив новостей для каждой новости
+		}
+	},
 
-  methods: {
-    open() {
-      this.isOpen = !this.isOpen;
+	methods: {
+		open() {
+			this.isOpen = !this.isOpen;
 
-      this.isOpen ? this.$emit('opened') : false; // Выпускаем кастомное событие из компонента
-    },
+			this.isOpen ? this.$emit('opened') : false; // Выпускаем кастомное событие из компонента
+		},
 
-    read() {
-      this.isOpen = false;
-      this.$emit('read', this.id);
-    }
-  },
+		read() {
+			this.isOpen = false;
+			this.$emit('read', this.id);
+		}
+	},
 
-  components: {AppNewsList, AppButton},
+	components: {AppNewsList, AppButton},
 }
-
-
 
 
 </script>

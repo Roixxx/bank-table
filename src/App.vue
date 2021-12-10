@@ -1,22 +1,22 @@
 <template>
-  <div class="container pt-1">
-    <div class="card">
-      <h2>Актуальные новости {{ now }}</h2>
-      <span>Открыто: {{ openRate }} . Прочитано: {{ readRate }} </span>
-    </div>
+	<div class="container pt-1">
+		<div class="card">
+			<h2>Актуальные новости {{ now }}</h2>
+			<span>Открыто: {{ openRate }} . Прочитано: {{ readRate }} </span>
+		</div>
 
 
-    <AppNews
-      v-for="item in news"
-      :title="item.title"
-      :key="item.id"
-      :id="item.id"
-      :wasRead="item.wasRead"
-      @opened="openRate++"
-      @read="read"
-    />
+		<AppNews
+			v-for="item in news"
+			:title="item.title"
+			:key="item.id"
+			:id="item.id"
+			:wasRead="item.wasRead"
+			@opened="openRate++"
+			@read="read"
+		/>
 
-  </div>
+	</div>
 </template>
 
 <script>
@@ -26,54 +26,56 @@ import AppNewsList from "./components/AppNewsList";
 
 export default {
 
-  emits: ['action'],
+	emits: ['action'],
 
-  data () {
-    return {
-      now: new Date().toLocaleDateString(),
+	data() {
+		return {
+			now: new Date().toLocaleDateString(),
+			openRate: 0,
+			readRate: 0,
 
-      openRate: 0,
-      readRate: 0,
+			news: [
+				{
+					title: 'Новость лалаллалалал 1',
+					id: 1,
+					wasRead: false,
+				},
+				{
+					title: 'Новость 2',
+					id: 2,
+					wasRead: false,
+				}
+			]
+		}
+	},
 
-      news: [
-        {
-          title: 'Новость лалаллалалал 1',
-          id: 1,
-          wasRead: false,
-        },
-        {
-          title: 'Новость 2',
-          id: 2,
-          wasRead: false,
-        }
-      ]
-    }
-  },
+	methods: {
+		read(id) {
+			this.readRate++;
 
-  methods: {
-    read(id) {
-      this.readRate++;
+			let i = this.news.findIndex(item => item.id === id);
+			this.news[i].wasRead = true;
+		}
 
-      let i = this.news.findIndex( item => item.id === id );
-      this.news[i].wasRead = true;
-    }
+	},
 
-  },
+	provide() {
+		return {
+			title: 'Список всех новостей',
+			news: this.news,
 
-  provide() {
-    return {
-      title: 'Список всех новостей',
-      news: this.news,
-
-    }
-  },
+		}
+	},
 
 
-  components: {
-    AppNews,
-    AppNewsList,
-  },
+	components: {
+		AppNews,
+		AppNewsList,
+	},
 }
 </script>
 
 
+<style>
+
+</style>
