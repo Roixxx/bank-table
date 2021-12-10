@@ -1,81 +1,59 @@
 <template>
 	<div class="container pt-1">
 		<div class="card">
-			<h2>Актуальные новости {{ now }}</h2>
-			<span>Открыто: {{ openRate }} . Прочитано: {{ readRate }} </span>
+			<h2>Slots</h2>
 		</div>
 
+		<AppBlock>
+			<!-- #text - сокращение v-slot -->
+			<template #text>
+				<p>Это самый важный текст для блока</p>
+			</template>
 
-		<AppNews
-			v-for="item in news"
-			:title="item.title"
-			:key="item.id"
-			:id="item.id"
-			:wasRead="item.wasRead"
-			@opened="openRate++"
-			@read="read"
-		/>
+			<template v-slot:header>
+				<h3>Это заголовок</h3>
+			</template>
+		</AppBlock>
+
+		<AppList>
+
+			<!-- это всё просто шаблон слота | {i, item} - распаковка обекта ES6   -->
+			<template #numbers-slot="{i, item}">
+
+				<span style="color: orange">
+					<strong> Index {{ i }}: </strong>
+					{{ item }}
+				</span>
+				<span> Текст слота </span>
+
+			</template>
+		</AppList>
 
 	</div>
 </template>
 
 <script>
 
-import AppNews from "./components/AppNews";
-import AppNewsList from "./components/AppNewsList";
+
+import AppBlock from "./components/AppBlock";
+import AppList from "./components/AppList";
 
 export default {
 
-	emits: ['action'],
 
-	data() {
-		return {
-			now: new Date().toLocaleDateString(),
-			openRate: 0,
-			readRate: 0,
-
-			news: [
-				{
-					title: 'Новость лалаллалалал 1',
-					id: 1,
-					wasRead: false,
-				},
-				{
-					title: 'Новость 2',
-					id: 2,
-					wasRead: false,
-				}
-			]
-		}
-	},
-
-	methods: {
-		read(id) {
-			this.readRate++;
-
-			let i = this.news.findIndex(item => item.id === id);
-			this.news[i].wasRead = true;
-		}
-
-	},
-
-	provide() {
-		return {
-			title: 'Список всех новостей',
-			news: this.news,
-
-		}
-	},
 
 
 	components: {
-		AppNews,
-		AppNewsList,
-	},
+		AppBlock, AppList,
+	}
 }
+
+
 </script>
 
 
-<style>
+<style scoped lang="scss">
+
+
 
 </style>
