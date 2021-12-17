@@ -1,51 +1,59 @@
 <template>
 	<div class="container pt-1">
 		<div class="card">
-			<h2>Slots</h2>
+			<h2>Динамические и асинхронные компоненты</h2>
+			<app-button :color="oneColor" @action=" active = 'one' ">One</app-button>
+			<app-button :color="twoColor" @action=" active = 'two' ">Two</app-button>
+
 		</div>
 
-		<AppBlock>
-			<!-- #text - сокращение v-slot -->
-			<template #text>
-				<p>Это самый важный текст для блока</p>
-			</template>
 
-			<template v-slot:header>
-				<h3>Это заголовок</h3>
-			</template>
-		</AppBlock>
+		<keep-alive>
 
-		<AppList>
+			<component :is="componentName"></component>
+		</keep-alive>
 
-			<!-- это всё просто шаблон слота | {i, item} - распаковка обекта ES6   -->
-			<template #numbers-slot="{i, item}">
-
-				<span style="color: orange">
-					<strong> Index {{ i }}: </strong>
-					{{ item }}
-				</span>
-				<span> Текст слота </span>
-
-			</template>
-		</AppList>
 
 	</div>
 </template>
 
 <script>
 
+import AppButton from "./components/AppButton";
+import AppTextOne from "./components/AppTextOne";
+import AppTextTwo from "./components/AppTextTwo";
 
-import AppBlock from "./components/AppBlock";
-import AppList from "./components/AppList";
+
 
 export default {
 
+	data() {
+		return {
+			active: 'one',
+		}
+	},
 
+	computed: {
+		componentName() {
+			return 'app-text-' + this.active;
+		},
 
+		oneColor() {
+			return this.active === 'one' ? 'primary' : '';
+		},
+
+		twoColor() {
+			return this.active === 'two' ? 'primary' : '';
+		},
+
+	},
 
 	components: {
-		AppBlock, AppList,
+		AppButton,
+		AppTextOne,
+		AppTextTwo,
 	}
+
 }
 
 
