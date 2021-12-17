@@ -1,4 +1,4 @@
-# 07-vue-forms
+# 08-vue-http
 
 ## Project setup
 ```

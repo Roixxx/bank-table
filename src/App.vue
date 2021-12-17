@@ -1,109 +1,58 @@
 <template>
+
 	<div class="container">
-		<form class="card" @submit.prevent="submitHandler">
-			<h1>Форма</h1>
+		<div class="card">
+			<h2>Работа с базой данных</h2>
 
-			<app-input placeholder="Введи имя" :error="errors.name" label="Как тебя зовут?" v-model:value="name"></app-input>
-
-			<div class="form-control">
-				<label for="age">Выбери возраст</label>
-				<input v-model.number="age" type="number" max="99" id="age">
-			</div>
-
-			<div class="form-control">
-				<label for="city">Твой город</label>
-				<select id="city" v-model="city">
-					<option value="spb">Санкт-Петербург</option>
-					<option value="msk">Москва</option>
-					<option value="kzn">Казань</option>
-					<option value="nsk">Новосибирск</option>
-				</select>
-			</div>
-
-			<div class="form-checkbox">
-				<span class="label">Готов к переезду в Токио?</span>
-				<div class="checkbox">
-					<label><input v-model="relocate" type="radio" name="trip" value="yes"/> Да</label>
+			<form class="card" @submit.prevent="createPerson">
+				<div class="form-control">
+					<label for="name">Введите имя</label>
+					<input type="text" id="name" v-model.trim="name">
 				</div>
 
-				<div class="checkbox">
-					<label><input v-model="relocate" type="radio" name="trip" value="no"/> Нет</label>
-				</div>
-			</div>
+				<button class="btn primary" :disabled="name.length === 0">Создать</button>
+			</form>
 
-			<div class="form-checkbox">
-				<span class="label">Что знаешь во Vue?</span>
-				<div class="checkbox">
-					<label><input v-model="skills" value="vuex" name="skills" type="checkbox"/> Vuex</label>
-				</div>
-				<div class="checkbox">
-					<label><input v-model="skills" value="cli" name="skills" type="checkbox"/> Vue CLI</label>
-				</div>
-				<div class="checkbox">
-					<label><input v-model="skills" value="Router" name="skills" type="checkbox"/> Vue Router</label>
-				</div>
-			</div>
-
-			<button type="submit" class="btn primary">Отправить</button>
-		</form>
+		</div>
 	</div>
+
 </template>
+
 
 <script>
 
-import AppInput from "./components/AppInput";
 
 export default {
-
 	data() {
 		return {
 			name: '',
-			age: '21',
-			city: 'msk',
-			relocate: null,
-			skills: [],
-			errors: {
-				name: null,
-			}
+			db: 'https://vue-test-http-6a046-default-rtdb.europe-west1.firebasedatabase.app/people.json',
 		}
 	},
 
 	methods: {
+		async createPerson() {
 
-		formIsValid() {
+			const res = await fetch(this.db, {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({firstName: this.name }),
+			})
 
-			if (this.name.length === 0) {
+			const data = await res.json();
 
-				this.errors.name = "Введите имя"
-				return false;
-
-			} else {
-				this.errors.name = null;
-				return true;
-			}
-
-		},
-
-		submitHandler() {
-
-			if ( this.formIsValid() ) {
-				console.log(this.name)
-				console.log(this.age)
-				console.log(this.city)
-				console.log(this.relocate)
-				console.log(this.skills)
-			}
+			this.name = '';
+			console.log(data)
 		}
-	},
-
-	components: {AppInput}
+	}
 }
 
 
 </script>
 
+
+
+
 <style>
-	small {
-		color: red;
-	}
+
 </style>
