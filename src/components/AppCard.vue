@@ -1,5 +1,7 @@
 <template>
 	<div class="card card-w70">
+		<slot></slot>
+
 		<h1>Резюме Nickname</h1>
 		<div class="avatar">
 			<img src="https://via.placeholder.com/150">
@@ -21,7 +23,9 @@
 
 <script>
 export default {
+	props: {
 
+	}
 }
 
 

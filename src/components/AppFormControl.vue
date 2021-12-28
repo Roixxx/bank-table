@@ -1,9 +1,9 @@
 <template>
-	<form @submit.prevent="addItem" class="card card-w30">
+	<form @submit.prevent="$emit('addItem')" class="card card-w30">
 		<div class="form-control">
 			<label for="type">Тип блока</label>
 
-			<select id="type">
+			<select id="type" v-model="fieldType">
 				<option value="title">Заголовок</option>
 				<option value="subtitle">Подзаголовок</option>
 				<option value="avatar">Аватар</option>
@@ -13,10 +13,10 @@
 
 		<div class="form-control">
 			<label for="value">Значение</label>
-			<textarea id="value" rows="3"></textarea>
+			<textarea v-model="fieldValue" id="value" rows="3"></textarea>
 		</div>
 
-		<button class="btn primary">Добавить</button>
+		<button :disabled="fieldValue.length < 3" class="btn primary">Добавить</button>
 	</form>
 </template>
 
@@ -25,16 +25,12 @@
 export default {
 	data() {
 		return {
-
+			fieldType: 'title',
+			fieldValue: '',
 		}
 	},
 
-	methods: {
-
-		addItem(e) {
-			console.log(e)
-		}
-	}
+	emits: ['addItem'],
 }
 
 </script>

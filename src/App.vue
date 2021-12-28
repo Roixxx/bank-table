@@ -2,8 +2,10 @@
 	<div class="container column">
 
 
-		<AppFormControl/>
-		<AppCard/>
+		<AppFormControl @addItem="addItem" />
+		<AppCard>
+			<component :is="componentName">Тест</component>
+		</AppCard>
 
 	</div>
 
@@ -36,9 +38,23 @@ import AppCard from "./components/AppCard";
 
 export default {
 
+	data() {
+		return {
+			addItem() {
+				console.log('add itm')
+			}
+		}
+	},
+
 	components: {
 		AppFormControl,
 		AppCard,
+	},
+
+	computed: {
+		componentName() {
+			return 'AppTitleField';
+		}
 	}
 }
 
