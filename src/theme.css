@@ -11,6 +11,7 @@ body {
     font-size: 16px;
     color: #2c3e50;
     background: #2c3e50;
+    overflow: hidden;
 }
 
 hr {
@@ -295,8 +296,8 @@ h3 {
     background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
     background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
     position: relative;
-    -webkit-animation: load3 1.4s infinite linear;
-    animation: load3 1.4s infinite linear;
+    -webkit-animation: load3 0.5s infinite linear;
+    animation: load3 0.5s infinite linear;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);
@@ -310,6 +311,7 @@ h3 {
     top: 0;
     left: 0;
     content: '';
+    z-index: 14413255231414;
 }
 .loader:after {
     background: #2c3e50;
@@ -323,6 +325,7 @@ h3 {
     left: 0;
     bottom: 0;
     right: 0;
+    z-index: 14411414;
 }
 @-webkit-keyframes load3 {
     0% {
