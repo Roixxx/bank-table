@@ -23,9 +23,19 @@
 
 <script>
 export default {
-	props: {
 
-	}
+	components: {
+		AppTitleField,
+		AppAvatarField,
+		AppSubtitleField,
+		AppTextField
+	},
+
+
+	props: {
+		fields: Array,
+	},
+
 }
 
 

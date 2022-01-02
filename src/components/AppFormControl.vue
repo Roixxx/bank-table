@@ -30,7 +30,21 @@ export default {
 		}
 	},
 
-	emits: ['addItem'],
+
+	methods: {
+		submitHandler() {
+			this.$emit('addItem', {fieldType: this.fieldType, fieldValue: this.fieldValue});
+			this.fieldValue = '';
+			
+		}
+	},
+
+	emits: {
+		addItem: ({type, val}) => {
+			return (type && val);   // валидация, должен вернруть true
+		}
+	},
+
 }
 
 </script>

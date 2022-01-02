@@ -1,6 +1,6 @@
 <template>
 
-	<p>{{value}}</p>
+	<h1>{{value}}</h1>
 </template>
 
 <script>
@@ -8,3 +8,4 @@ export default {
 	props: {value: String}
 }
 </script>
+
