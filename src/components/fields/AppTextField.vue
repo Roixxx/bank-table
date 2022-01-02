@@ -1,3 +1,4 @@
+
 <template>
 
 	<p>{{value}}</p>

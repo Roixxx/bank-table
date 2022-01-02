@@ -21,6 +21,7 @@ import AppTextField from './fields/AppTextField';
 
 export default {
 
+
 	components: {
 		AppTitleField,
 		AppAvatarField,
