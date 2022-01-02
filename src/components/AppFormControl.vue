@@ -1,13 +1,13 @@
 <template>
-	<form @submit.prevent="$emit('addItem')" class="card card-w30">
+	<form @submit.prevent="submitHandler" class="card card-w30">
 		<div class="form-control">
 			<label for="type">Тип блока</label>
 
 			<select id="type" v-model="fieldType">
-				<option value="title">Заголовок</option>
-				<option value="subtitle">Подзаголовок</option>
-				<option value="avatar">Аватар</option>
-				<option value="text">Текст</option>
+				<option value="Title">Заголовок</option>
+				<option value="Subtitle">Подзаголовок</option>
+				<option value="Avatar">Аватар</option>
+				<option value="Text">Текст</option>
 			</select>
 		</div>
 
@@ -25,8 +25,16 @@
 export default {
 	data() {
 		return {
-			fieldType: 'title',
+			fieldType: 'Title',
 			fieldValue: '',
+		}
+	},
+
+	methods: {
+		submitHandler() {
+			this.$emit('addItem', {fieldType: this.fieldType, fieldValue: this.fieldValue});
+			this.fieldValue = '';
+			
 		}
 	},
 
