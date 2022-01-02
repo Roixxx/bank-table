@@ -3,46 +3,59 @@
 
 
 		<AppFormControl @addItem="addItem" />
-
-		<AppCard :fields="fields" />
-
-		
+		<AppCard>
+			<component :is="componentName">Тест</component>
+		</AppCard>
 
 	</div>
-	<AppComments></AppComments>
 
+
+	<div class="container">
+		<p>
+			<button class="btn primary">Загрузить комментарии</button>
+		</p>
+		<div class="card">
+			<h2>Комментарии</h2>
+			<ul class="list">
+				<li class="list-item">
+					<div>
+						<p><strong>test@microsoft.com</strong></p>
+						<small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, reiciendis.</small>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="loader"></div>
+	</div>
 </template>
 
 <script>
 
 import AppFormControl from "./components/AppFormControl";
 import AppCard from "./components/AppCard";
-import AppComments from "./components/AppComments";
-
-
 
 export default {
 
 	data() {
 		return {
-
-			fields: [],
-		}
-	},
-
-
-	methods: {
-		addItem(field) {
-			this.fields.push(field);
+			addItem() {
+				console.log('add itm')
+			}
 		}
 	},
 
 	components: {
 		AppFormControl,
 		AppCard,
-		AppComments,
 	},
 
+	computed: {
+		componentName() {
+			return 'AppTitleField';
+		}
+	}
 }
 
 </script>
