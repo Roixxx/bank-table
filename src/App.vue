@@ -1,36 +1,51 @@
 <template>
 	<div class="container">
-
-
-		<app-alert
-			v-if="alert"
-			text="Текст 12345678900-"
-			title="Внимание!"
-			type="danger"
-			closable
-			@close="toggleAlert"
-		/>
-
 		<div class="card">
-			<button class="btn primary" @click="toggleAlert">{{alert ? 'Скрыть' : 'Показать'}} сообщение</button>
+			<h2 v-color="myColor">Разговор про директивы</h2>
+			<div class="form-control">
+				<label for="inp">Активный по умолчанию</label>
+				<input type="text" id="inp" v-focus>
+			</div>
+
+			<button class="btn" @click="myColor = 'green'">Сменить цвет</button>
+
+
 		</div>
 
-		<app-block/>
 	</div>
 </template>
 
 <script>
 
-import AppAlert from "./components/AppAlert";
-import AppBlock from "./components/AppBlock";
-import alertMixin from "./mixins/alertMixin";
+
 
 export default {
-	mixins: [alertMixin],		// локальный миксин
+
+	data() {
+		return {
+			myColor: 'darkred',
+		}
+	},
+
+	directives: {
+		focus: {
+			mounted(el) {
+				el.focus();
+			}
+		},
+		color: {
+			mounted(el, binding) {
+				el.style.color = binding.value;
+			},
+
+			updated(el, binding) {
+				el.style.color = binding.value;
+			}
+		}
+	},
 
 	components: {
-		AppAlert,
-		AppBlock,
+
 	}
 }
 </script>
