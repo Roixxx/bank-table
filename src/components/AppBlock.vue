@@ -6,31 +6,24 @@
 			v-if="alert"
 			text="Текст 12345678900-"
 			title="Внимание!"
-			type="danger"
-			closable
 			@close="toggleAlert"
 		/>
 
 		<div class="card">
 			<button class="btn primary" @click="toggleAlert">{{alert ? 'Скрыть' : 'Показать'}} сообщение</button>
 		</div>
-
-		<app-block/>
 	</div>
 </template>
 
 <script>
 
-import AppAlert from "./components/AppAlert";
-import AppBlock from "./components/AppBlock";
-import alertMixin from "./mixins/alertMixin";
+import AppAlert from "./AppAlert";
+import alertMixin from "../mixins/alertMixin";
 
 export default {
-	mixins: [alertMixin],		// локальный миксин
-
+	mixins: [alertMixin],           // локальный миксин
 	components: {
 		AppAlert,
-		AppBlock,
 	}
 }
 </script>
