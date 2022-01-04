@@ -1,38 +1,66 @@
 <template>
-	<div class="container">
-		<div class="card">
-			<h2> {{ $i18n('app.title') }}</h2>
 
-			<button class="btn" @click="changeLang">Переключить язык</button>
-		</div>
+	<the-navbar :visible="isAuth"></the-navbar>
 
+	<div class="container with-nav">
+		<router-view></router-view>
 	</div>
+
 </template>
 
 <script>
-
+import TheNavbar from './components/TheNavbar'
 
 
 export default {
+	components: {TheNavbar},
 
 	data() {
 		return {
-
+			isAuth: false,
 		}
 	},
 
 	methods: {
-		changeLang() {
-			this.changeI18N('en');
-			this.$forceUpdate();
+		login() {
+			this.isAuth = true;
+
+			if (this.$route.query.page) {
+				this.$router.push(this.$route.query.page); // если есть страрая страницы в query параметре
+			} else {
+				this.$router.push('/dashboard');		// по умолчанию
+			}
+
+
+		},
+
+		logout() {
+			this.isAuth = false;
+			this.$router.push({
+				path: '/login',
+				query: {
+					page: this.$route.path    // запоминаем с какой страницы выходим
+				}
+			});
 		}
 	},
 
-	inject: ['changeI18N'],
+	provide() {
+		return {
+			login: this.login,
+			logout: this.logout,
 
-	components: {
-
+			emails: [
+				{id: 1, theme: 'Купил себе PlayStation 5'},
+				{id: 2, theme: 'Выучил Vue Router'},
+				{id: 3, theme: 'Хочу изучить весь Vue'},
+				{id: 4, theme: 'А следующий блок про Vuex!'},
+				{id: 5, theme: 'А что там на счет Vue Hooks?'}
+			]
+		}
 	}
 }
 </script>
 
+<style>
+</style>
