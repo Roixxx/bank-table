@@ -94,10 +94,10 @@ h3 {
 
 .btn:disabled {
     cursor: not-allowed;
-    opacity: 1 !important;
-    background: #eee !important;
-    border-color: #ddd !important;
-    color: #999 !important;
+    opacity: 1!important;
+    background: #eee!important;
+    border-color: #ddd!important;
+    color: #999!important;
 }
 
 .btn:active {
@@ -294,6 +294,9 @@ h3 {
 }
 
 
+
+
+
 .loader {
     font-size: 10px;
     margin: 50px auto;
@@ -314,7 +317,6 @@ h3 {
     -ms-transform: translateZ(0);
     transform: translateZ(0);
 }
-
 .loader:before {
     width: 50%;
     height: 50%;
@@ -325,7 +327,6 @@ h3 {
     left: 0;
     content: '';
 }
-
 .loader:after {
     background: #2c3e50;
     width: 75%;
@@ -339,7 +340,6 @@ h3 {
     bottom: 0;
     right: 0;
 }
-
 @-webkit-keyframes load3 {
     0% {
         -webkit-transform: rotate(0deg);
@@ -350,7 +350,6 @@ h3 {
         transform: rotate(360deg);
     }
 }
-
 @keyframes load3 {
     0% {
         -webkit-transform: rotate(0deg);
