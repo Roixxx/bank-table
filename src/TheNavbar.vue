@@ -1,33 +1,36 @@
 <template>
-	<header class="navbar">
-<!--	Vuex - Счетчик : {{ $store.getters.counter }}-->
-		Vuex - Счетчик : {{ counter }}
+  <header class="navbar">
+    <strong>Счетчик {{ counter }}</strong>
 
-
-		<button class="btn" @click="add">Добавить 2</button>
-	</header>
+    <button class="btn" @click="add">Добавить 5</button>
+  </header>
 </template>
 
 <script>
-
-import {mapGetters, mapMutations} from 'vuex';
-
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
-
-
-	computed: {
-		...mapGetters(['counter'])
-	},
-
-	methods: {
-
-		...mapMutations(['increment']),
-
-		add() {
-			this.increment(2);
-		}
-	}
-
+  computed: {
+    counter() {
+      return this.$store.getters['count/counter']
+    },
+    // ...mapGetters('count', ['counter'])
+  },
+  methods: {
+    ...mapMutations({
+      addFive: 'count/add'
+    }),
+    add() {
+      this.addFive({ value: 5 })
+      // this.add({value: 5})
+      // this.$store.commit('add', {
+      //   value: 5
+      // })
+      // this.$store.commit({
+      //   type: 'add',
+      //   value: 5
+      // })
+    }
+  }
 }
 </script>
