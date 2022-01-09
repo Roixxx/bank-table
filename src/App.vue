@@ -5,6 +5,7 @@
 			<hr>
 			<p>Название: <strong>{{ name }}</strong></p>
 			<p>Версия: <strong>{{ version }}</strong></p>
+			<p>Версия: <strong>{{ compVersion }}</strong></p>
 
 			<button class="btn" @click="changeInfo">Изменить</button>
 		</div>
@@ -13,7 +14,7 @@
 
 <script>
 
-import {ref, reactive, toRefs} from 'vue';  // reactive только для объектов
+import {ref, reactive, toRefs, computed} from 'vue';  // reactive только для объектов
 									// ref для всего остального
 
 export default {
@@ -34,12 +35,17 @@ export default {
 			// myObj.version = 42;
 		}
 
+		const compVersion = computed(() => {
+			return version.value + ' (computed val)'
+		})
+
 		return {
 
 			//...toRefs(myObj),							< работа с объектом
 
 			name,
 			version,
+			compVersion,
 			changeInfo
 		}
 	},
