@@ -1,10 +1,5 @@
 <template>
-	<header class="navbar">
-		<strong>Vue Composition Api</strong>
-		<ul class="navbar-menu">
-			<li></li>
-		</ul>
-	</header>
+	<app-alert v-if="alert" title="Работаем в Composition API" type="primary" @close="close"></app-alert>
 	<div class="container with-nav ">
 		<div class="card">
 			<h1>Vue Composition Api</h1>
@@ -32,6 +27,7 @@
 import {ref, reactive, toRefs, computed, watch, provide, onMounted} from 'vue';  // reactive только для объектов, ref для всего остального
 
 import AppInfo from "../components/AppInfo";
+import AppAlert from "../components/AppAlert";
 
 export default {
 	setup() {											// Composition Api заменяет data, methods, computed, watch
@@ -81,7 +77,7 @@ export default {
 		}
 	},
 
-	components: {AppInfo}
+	components: {AppInfo, AppAlert}
 
 }
 </script>
