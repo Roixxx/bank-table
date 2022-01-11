@@ -3,7 +3,7 @@
 		<strong>Vue Composition Api</strong>
 		<ul class="navbar-menu">
 			<li><router-link to="/">Главная</router-link></li>
-			<li><router-link to="/reusable">Переиспользование</router-link></li>
+			<li><router-link to="/reusable">Переиспользование + Vuex</router-link></li>
 
 		</ul>
 	</header>

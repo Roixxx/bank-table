@@ -3,6 +3,7 @@
 	<div class="container with-nav ">
 		<div class="card">
 			<h1>Vue Composition Api</h1>
+			<button class="btn primary" @click="toggle">{{alert ? 'Hide' : 'Show'}} Alert</button>
 			<hr>
 			<p>Название: <strong>{{ name }}</strong></p>
 			<p>Версия: <strong>{{ version }}</strong></p>
@@ -28,6 +29,7 @@ import {ref, reactive, toRefs, computed, watch, provide, onMounted} from 'vue'; 
 
 import AppInfo from "../components/AppInfo";
 import AppAlert from "../components/AppAlert";
+import {useAlert} from "../use/alert";
 
 export default {
 	setup() {											// Composition Api заменяет data, methods, computed, watch
@@ -74,6 +76,8 @@ export default {
 			firstName,
 			changeInfo,
 			change,
+			...useAlert(true),	//const {alert: myAlert, toggle, close} = useAlert();
+
 		}
 	},
 
