@@ -1,4 +1,5 @@
 <template>
+<<<<<<< Updated upstream
 	<header class="navbar">
 		<strong>Vue Composition Api</strong>
 		<ul class="navbar-menu">
@@ -9,9 +10,31 @@
 	</header>
 	<div class="container with-nav ">
 		<router-view></router-view>
+=======
+	<the-navbar></the-navbar>
+
+	<div class="container with-nav">
+		<router-view/>
+>>>>>>> Stashed changes
 	</div>
 
 </template>
 
 <script>
+<<<<<<< Updated upstream
 </script>
+=======
+import TheNavbar from './components/TheNavbar'
+
+export default {
+	components: {
+		TheNavbar
+	}
+}
+
+</script>
+
+<style>
+
+</style>
+>>>>>>> Stashed changes
