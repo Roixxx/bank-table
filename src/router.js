@@ -1,16 +1,17 @@
 import {createRouter, createWebHistory} from "vue-router";
-import HomePage from "./views/HomePage";
-import ReusablePage from "./views/ReusablePage";
+import Tasks from "./views/Tasks";
+import New from "./views/New";
+
 
 
 export const router = createRouter({
 	history: createWebHistory(),
 
 	routes: [
-		{path: '/', component: HomePage},
-		{path: '/reusable', component: ReusablePage},
-	],
+		{path: "/", component: Tasks},
+		{path: "/new", component: New},
 
+	],
 	linkActiveClass: 'active',
 	linkExactActiveClass: 'active',
 

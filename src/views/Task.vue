@@ -1,5 +1,7 @@
 <template>
+
 	<div class="card">
+
 		<h2>Название задачи</h2>
 		<p><strong>Статус</strong>:
 			<AppStatus :type="'done'"/>
@@ -11,11 +13,15 @@
 			<button class="btn primary">Завершить</button>
 			<button class="btn danger">Отменить</button>
 		</div>
+
 	</div>
+
 	<h3 class="text-white center">
 		Задачи с id = <strong>Tут АЙДИ</strong> нет.
 	</h3>
+
 </template>
+
 
 <script>
 import AppStatus from '../components/AppStatus'

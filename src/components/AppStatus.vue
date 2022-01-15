@@ -1,3 +1,3 @@
 <template>
-	<span :class="['badge']">Название статуса</span>
+  <span :class="['badge']">Название статуса</span>
 </template>

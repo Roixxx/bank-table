@@ -1,6 +1,9 @@
 <template>
+
 	<form class="card">
+
 		<h1>Создать новую задачу</h1>
+
 		<div class="form-control">
 			<label for="title">Название</label>
 			<input type="text" id="title">
@@ -18,8 +21,14 @@
 
 		<button class="btn primary">Создать</button>
 	</form>
+
 </template>
 
 
 <script>
+
+export default {
+
+}
+
 </script>
