@@ -433,3 +433,7 @@ h3 {
 .text-white.center {
     text-align: center;
 }
+
+ul {
+    padding: 0;
+}

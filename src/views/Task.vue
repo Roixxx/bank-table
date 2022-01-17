@@ -6,6 +6,8 @@
 		<p><strong>Статус</strong>:
 			<AppStatus :type="'done'"/>
 		</p>
+		<p>{{id}}</p>
+
 		<p><strong>Дэдлайн</strong>: {{ new Date().toLocaleDateString() }}</p>
 		<p><strong>Описание</strong>: Описание задачи</p>
 		<div>
@@ -27,6 +29,9 @@
 import AppStatus from '../components/AppStatus'
 
 export default {
+	props: ['id'],
+
+
 	components: {AppStatus}
 }
 </script>
