@@ -11,7 +11,7 @@ export const router = createRouter({
 	routes: [
 		{path: "/", component: Tasks},
 		{path: "/new", component: New},
-		{path: "/task/:id", props: true, component: Task}
+		{path: "/task/:id", name: "task", props: true, component: Task}
 
 	],
 	linkActiveClass: 'active',

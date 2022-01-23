@@ -1,33 +1,39 @@
 <template>
-<!--	<h1 class="text-white center">Задач пока нет</h1>-->
+	<div v-if="!tasks.length">
+		<h1 class="text-white center">Задач пока нет</h1>
+	</div>
+
+	<div v-else>
+		<h3 class="text-white">Всего активных задач: {{ tasks.length }}</h3>
+
+		<ul>
+			<li class="card" v-for="task in tasks">
+				<h2 class="card-title">
+					{{ task.name }}
+					<AppStatus :status="task.status"/>
+				</h2>
+
+				<p>
+					<strong>
+						<small>
+							{{ task.deadlineDate }}
+						</small>
+					</strong>
+				</p>
+
+				<p>{{task.description}}</p>
 
 
-	<h3 class="text-white">Всего активных задач: {{ tasks.length }}</h3>
 
-	<ul>
-		<li class="card" v-for="task in tasks">
-			<h2 class="card-title">
-				{{ task.name }}
-				<AppStatus :status="task.status"/>
-			</h2>
+				<router-link :to="{ path: `/task/${task.id}` }" >
+					<button class="btn primary">Посмотреть</button>
+				</router-link>
 
-			<p>
-				<strong>
-					<small>
-						{{ task.deadlineDate }}
-					</small>
-				</strong>
-			</p>
+			</li>
 
-			<p>{{task.description}}</p>
+		</ul>
+	</div>
 
-			<router-link :to="{ path: `/task/${task.id}` }" >
-				<button class="btn primary">Посмотреть</button>
-			</router-link>
-
-		</li>
-
-	</ul>
 
 
 
@@ -40,26 +46,23 @@ import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import {onMounted} from "vue";
 
+
+
 export default {
 
 	setup() {
 		const $store = useStore();
-		const tasks = computed(() => $store.getters.tasks);
 
-		async function loadTasks() {
-			const data = await fetch($store.getters.db)
-				.then(res => res.json());
 
-			const tasksArr = Object.values(data);
-			$store.commit('setTasks', tasksArr);
-		}
 
 		onMounted(async () => {
-			await loadTasks();
+			await $store.dispatch('getTasks')
 
 		})
 
-		return {tasks}
+		return {
+			tasks: computed(() => $store.getters.tasks)
+		}
 	},
 
 

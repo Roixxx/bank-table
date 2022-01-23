@@ -43,10 +43,10 @@ export default {
 		const deadlineDate = ref('');
 		const description = ref('');
 
-		const generateId = computed(() => Math.floor(100000 + Math.random() * 900000))
+		const generateId = computed(() => Math.floor(100000 + Math.random() * 900000));
 		const checkForm = computed(() => {
 			return !(taskName.value && deadlineDate.value && description.value)
-		})
+		});
 
 		function handleSubmit() {
 			createTask();

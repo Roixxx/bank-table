@@ -1,25 +1,26 @@
 <template>
 
-	<div class="card">
 
-		<h2>Название задачи</h2>
+	<div class="card" v-if="task">
+
+		<h2> {{task.name}} </h2>
+		<h2> {{task}} </h2>
 		<p><strong>Статус</strong>:
-			<AppStatus :type="'done'"/>
+			<AppStatus :status="task.status"/>
 		</p>
-		<p>{{id}}</p>
 
-		<p><strong>Дэдлайн</strong>: {{ new Date().toLocaleDateString() }}</p>
+		<p><strong>Дэдлайн</strong>: {{ task.deadlineDate }}</p>
 		<p><strong>Описание</strong>: Описание задачи</p>
 		<div>
-			<button class="btn">Взять в работу</button>
+			<button class="btn" @click="handleStatus('В работе')">Взять в работу</button>
 			<button class="btn primary">Завершить</button>
 			<button class="btn danger">Отменить</button>
 		</div>
 
 	</div>
 
-	<h3 class="text-white center">
-		Задачи с id = <strong>Tут АЙДИ</strong> нет.
+	<h3 v-else class="text-white center">
+		Задачи с id {{ id }} нет.
 	</h3>
 
 </template>
@@ -27,10 +28,35 @@
 
 <script>
 import AppStatus from '../components/AppStatus'
+import {computed, onMounted} from "vue";
+import {useStore} from "vuex";
 
 export default {
-	props: ['id'],
+	props: {
+		"id": String,
+	},
 
+	setup(props) {
+		const $store = useStore();
+
+		let task = computed(() => $store.getters.tasks.find( el => el.id == props.id));
+
+		function handleStatus(newStatus) {
+			task.value.status = newStatus;
+
+			$store.dispatch('changeTask', task.value);
+		}
+
+		onMounted(async ()=> {
+			await $store.dispatch('getTasks')
+		});
+
+
+		return {
+			task,
+			handleStatus,
+		}
+	},
 
 	components: {AppStatus}
 }
