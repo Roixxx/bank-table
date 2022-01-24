@@ -4,7 +4,7 @@
 	</div>
 
 	<div v-else>
-		<h3 class="text-white">Всего активных задач: {{ tasks.length }}</h3>
+		<h3 class="text-white">Всего активных задач: {{ activeTasks }}</h3>
 
 		<ul>
 			<li class="card" v-for="task in tasks">
@@ -22,8 +22,6 @@
 				</p>
 
 				<p>{{task.description}}</p>
-
-
 
 				<router-link :to="{ path: `/task/${task.id}` }" >
 					<button class="btn primary">Посмотреть</button>
@@ -52,15 +50,13 @@ export default {
 
 	setup() {
 		const $store = useStore();
-
-
-
+		
 		onMounted(async () => {
 			await $store.dispatch('getTasks')
-
 		})
 
 		return {
+			activeTasks: computed(() => $store.getters.activeTasks),
 			tasks: computed(() => $store.getters.tasks)
 		}
 	},

@@ -60,7 +60,7 @@ export default {
 				name: taskName.value,
 				deadlineDate:  new Date(deadlineDate.value).toLocaleDateString(),
 				description: description.value,
-				status: 'Активен',
+				status: 'Активна',
 			}
 
 			const res = await fetch($store.getters.db, {

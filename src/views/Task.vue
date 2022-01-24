@@ -12,9 +12,9 @@
 		<p><strong>Дэдлайн</strong>: {{ task.deadlineDate }}</p>
 		<p><strong>Описание</strong>: Описание задачи</p>
 		<div>
-			<button class="btn" @click="handleStatus('В работе')">Взять в работу</button>
-			<button class="btn primary">Завершить</button>
-			<button class="btn danger">Отменить</button>
+			<button class="btn" :disabled="task.status !== 'Активна'" @click="handleStatus('В работе')">Взять в работу</button>
+			<button class="btn primary" :disabled="task.status !== 'В работе'" @click="handleStatus('Завершена')">Завершить</button>
+			<button class="btn danger" :disabled="/Отменена|Завершена/.test(task.status)" @click="handleStatus('Отменена')">Отменить</button>
 		</div>
 
 	</div>
@@ -42,7 +42,7 @@ export default {
 		let task = computed(() => $store.getters.tasks.find( el => el.id == props.id));
 
 		function handleStatus(newStatus) {
-			task.value.status = newStatus;
+			task.value.status = newStatus;		// данные из store нельзя менять в комнонентах
 
 			$store.dispatch('changeTask', task.value);
 		}

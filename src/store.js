@@ -1,6 +1,6 @@
 import {createStore} from 'vuex';
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, update, push, child} from "firebase/database";
+import { getDatabase, ref, update} from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -34,6 +34,10 @@ export default createStore({
 
 		tasks(state) {
 			return state.tasks;
+		},
+
+		activeTasks(state) {
+			return state.tasks.filter(task => task.status === 'Активна').length;
 		}
 	},
 
@@ -41,23 +45,29 @@ export default createStore({
 		async getTasks(context) {
 
 			const data = await fetch(context.getters.db)
-				.then(res => res.json());
+				.then(res => res.json())
+				.then(res => {
+
+					return Object.keys(res).map(key => {
+						return {
+							key: key,
+							...res[key],
+						}
+					})
+				})
 
 			context.commit('setTasks', Object.values(data));
 		},
 
 		async changeTask(context, task) {
-
-			// Get a key for a new Post.
-			const newPostKey = push(child(ref(db), 'tasks')).key;
-			console.log(newPostKey);
-
-			update(ref(db), {'/tasks/-Mu5MPrmfsFVF2mdO8BL/status': task.status })
+			const statusLink = `/tasks/${task.key}/status`;
+			update(ref(db), {[statusLink]: task.status })
 		}
 	},
 
 	mutations: {
 		setTasks(state, data) {
+
 			state.tasks = data;
 		},
 

@@ -10,10 +10,10 @@ import {computed} from "vue";
 export default {
 	setup(props) {
 		const statusClass = {
-			'Активен': 'primary',
-			'В работе': '',
-			'Отменён': 'danger',
-			'Выполняется': '',
+			'Активна': 'primary',
+			'В работе': 'warning',
+			'Отменена': 'danger',
+			'Завершена': 'primary',
 		}
 
 		return {
