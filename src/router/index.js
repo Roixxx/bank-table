@@ -39,11 +39,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	const needAuth = to.meta.auth;
+	const isAuth = store.getters['authModule/isAuth'];
 
-	if (needAuth && store.getters['authModule/isAuth']) {
+	if (needAuth && isAuth) {
 		next();
-	} else  {
+	} else if (needAuth && !isAuth) {
 		next('/auth?msg=auth');
+	} else {
+		next();
 	}
 });
 

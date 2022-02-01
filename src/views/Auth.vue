@@ -2,7 +2,7 @@
 	<div class="container">
 		<form class="card" @submit.prevent="onSubmit">
 
-			<h1>Войти в хату</h1>
+			<h1>Войти в хату &#128682;</h1>
 
 			<div :class="['form-control', {invalid: pError}]">
 				<label>
