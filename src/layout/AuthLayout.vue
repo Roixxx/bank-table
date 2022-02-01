@@ -1,9 +1,5 @@
 <template>
-	<div class="container">
-		<div class="card">
-
-		</div>
-	</div>
+	<router-view></router-view>
 
 </template>
 
