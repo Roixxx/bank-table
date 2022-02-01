@@ -32,7 +32,7 @@ export default {
 	},
 	actions: {
 		async login({ commit, getters }, payload) {
-			console.log(process)
+			console.log(process.env)
 			//await axios.post(getters.endpoint);
 			//commit('setToken', 'test');
 		},
