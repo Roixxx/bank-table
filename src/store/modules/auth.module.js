@@ -1,8 +1,12 @@
+import axios from "axios";
+const TOKEN_KEY = 'token';
+
 export default {
 	namespaced: true,		// локальные название
 	state() {
 		return {
-			token: null,
+			token: localStorage.getItem(TOKEN_KEY),
+			endpoint: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=[API_KEY]',
 		}
 	},
 	getters: {
@@ -12,21 +16,25 @@ export default {
 		isAuth(_, getters) {
 			return !!getters.token;
 		},
+		endpoint(state) {
+			return state.endpoint;
+		}
 	},
 	mutations: {
 		setToken(state, token) {
 			state.token = token;
-			localStorage.setItem('token', token)
+			localStorage.setItem(TOKEN_KEY, token)
 		},
 		logout(state) {
 			state.token = null;
-			localStorage.removeItem('token')
+			localStorage.removeItem(TOKEN_KEY)
 		},
 	},
-	actinons: {
-		async login({ commit }, payload) {
-			console.log(payload)
-			commit('setToken', 'test');
+	actions: {
+		async login({ commit, getters }, payload) {
+			console.log(process)
+			//await axios.post(getters.endpoint);
+			//commit('setToken', 'test');
 		},
 	}
 }

@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import store from '../store'
+import store from '../store/index'
 
 const routes = [
 
@@ -39,7 +39,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	const needAuth = to.meta.auth;
-	const isAuth = store.getters['authModule/isAuth'];
+	const isAuth = store.getters["authModule/isAuth"];
 
 	if (needAuth && isAuth) {
 		next();
