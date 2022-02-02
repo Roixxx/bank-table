@@ -6,7 +6,7 @@ export default {
 	state() {
 		return {
 			token: localStorage.getItem(TOKEN_KEY),
-			endpoint: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=[API_KEY]',
+			api: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.VUE_APP_FB_KEY}`,
 		}
 	},
 	getters: {
@@ -16,8 +16,8 @@ export default {
 		isAuth(_, getters) {
 			return !!getters.token;
 		},
-		endpoint(state) {
-			return state.endpoint;
+		api(state) {
+			return state.api;
 		}
 	},
 	mutations: {
@@ -32,8 +32,12 @@ export default {
 	},
 	actions: {
 		async login({ commit, getters }, payload) {
-			console.log(process.env)
-			//await axios.post(getters.endpoint);
+			console.log(getters.api)
+			const { data } = await axios.post(getters.api, payload).catch(e => {
+				console.log(e)
+			})
+
+
 			//commit('setToken', 'test');
 		},
 	}
