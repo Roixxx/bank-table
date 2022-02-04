@@ -124,6 +124,7 @@ h3 {
 .container {
     margin: 0 auto;
     max-width: 1000px;
+    margin-top: 70px;
 }
 
 .container.with-nav {

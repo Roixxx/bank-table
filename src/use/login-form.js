@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 export function useLoginForm() {
 	const store = useStore();
 	const router = useRouter();
-	const { handleSubmit, isSubmitting, submitCount } = useForm();
+	const { handleSubmit, isSubmitting,} = useForm();
 
 	const { value: email, errorMessage: eError, handleBlur: eBlur } = useField(
 		'email',
@@ -18,8 +18,8 @@ export function useLoginForm() {
 			.email('Необходмио ввести корректный email')
 	);
 
-	const { value: pass, errorMessage: pError, handleBlur: pBlur } = useField(
-		'pass',
+	const { value: password, errorMessage: pError, handleBlur: pBlur } = useField(
+		'password',
 		yup
 			.string()
 			.trim()
@@ -27,24 +27,17 @@ export function useLoginForm() {
 			.min(6, 'Пароль не может быть меньше 6 символов')
 	);
 
-	const isTooManyAttempts = computed(() => submitCount.value >= 3);
-
-	watch(isTooManyAttempts, val => {
-		if (val) {
-			setTimeout(() => submitCount.value = 0, 2000)
-		}
-	})
-
 	const onSubmit = handleSubmit(async values => {
-		await store.dispatch('authModule/login', values);
-		router.push('/');
+		await store.dispatch('authModule/login', values)
+			.then(() => router.push('/'))
+			.catch(e => e)
+
 	})
 
 	return {
 		email, eError, eBlur,
-		pass, pError, pBlur,
+		password, pError, pBlur,
 		onSubmit,
 		isSubmitting,
-		isTooManyAttempts
 	}
 }

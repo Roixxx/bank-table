@@ -1,4 +1,5 @@
 import axios from "axios";
+import { error } from "../../utils/error";
 const TOKEN_KEY = 'token';
 
 export default {
@@ -6,7 +7,7 @@ export default {
 	state() {
 		return {
 			token: localStorage.getItem(TOKEN_KEY),
-			api: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.VUE_APP_FB_KEY}`,
+			api: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`,
 		}
 	},
 	getters: {
@@ -31,14 +32,18 @@ export default {
 		},
 	},
 	actions: {
-		async login({ commit, getters }, payload) {
-			console.log(getters.api)
-			const { data } = await axios.post(getters.api, payload).catch(e => {
-				console.log(e)
-			})
+		async login({ commit, getters, dispatch }, payload) {
 
+			await axios.post(getters.api, {...payload, returnSecureToken: true})
+				.then(res => commit('setToken', res.data.idToken))
+				.catch(e => {
+					dispatch('setMessage', {
+						value: error(e.response.data.error.message),
+						type: 'danger',
+					}, {root: true})
+					throw new Error();
+				})
 
-			//commit('setToken', 'test');
 		},
 	}
 }
