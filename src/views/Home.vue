@@ -5,11 +5,11 @@
 			<button class="btn primary" @click="modal = true">Создать</button>
 		</template>
 
-		<requestTable :requests="[]"/>
+		<requestTable :requests="requests"/>
 
 		<teleport to="body">
 			<app-modal v-if="modal" title="Создать заявку" @close="modal = false">
-				<request-modal-body/>
+				<request-modal-body @created="modal = false"/>
 			</app-modal>
 		</teleport>
 	</app-page>
@@ -19,19 +19,24 @@
 
 import appPage from "../AppPage";
 import requestTable from "../components/request/RequestTable";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import AppModal from "../components/ui/AppModal";
 import requestModalBody from "../components/request/RequestModalBody";
+import { useStore } from "vuex";
+
 
 
 export default {
 	name: 'Home',
 
 	setup() {
+		const store = useStore();
 		const modal = ref(false);
 
+		const requests = computed(() => store.getters["requestAxiosModule/requests"])
+
 		return {
-			modal,
+			modal, requests
 		}
 	},
 

@@ -1,82 +1,92 @@
 <template>
 	<form @submit.prevent="onSubmit">
-		<div class="form-control">
+		<div class="form-control" :class="{invalid: fioError}">
 			<label>
 				ФИО
 				<input type="text" v-model="fio" @blur="fioBlur">
 				<small v-if="fioError"> {{ fioError }} </small>
 			</label>
-
+		</div>
+		<div class="form-control" :class="{invalid: telError}">
 			<label>
 				Телефон
 				<input type="number" v-model.number="tel" @blur="telBlur">
 				<small v-if="telError"> {{ telError }} </small>
 			</label>
-
+		</div>
+		<div class="form-control" :class="{invalid: sumError}">
 			<label>
 				Сумма
 				<input type="number" v-model.number="sum" @blur="sumBlur">
 				<small v-if="sumError"> {{ sumError }} </small>
 			</label>
-
+		</div>
+		<div class="form-control">
 			<label>
 				Статус
-				<select v-model="state">
-					<option>Активен</option>
-					<option>Выполняется</option>
-					<option>Завершён</option>
-					<option>Отменён</option>
+				<select v-model="status">
+					<option value="active">Активен</option>
+					<option value="pending">Выполняется</option>
+					<option value="done">Завершён</option>
+					<option value="cancelled">Отменён</option>
 				</select>
 			</label>
-
-			<button class="btn" type="submit" :disabled="isSubmitting">Создать</button>
-
 		</div>
+
+		<button class="btn" type="submit">Создать</button>
+
 	</form>
 </template>
 
 <script>
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
-import { ref } from "vue";
+import { useStore } from "vuex";
+
 
 export default {
-	setup() {
-		const { handleSubmit, isSubmitting } = useForm();
+	setup(_, {emit}) {
+		const store = useStore()
+
+		emits: ['created'];
+
+		const { handleSubmit } = useForm({
+			initialValues: {
+				status: 'active',
+			}
+		});
 
 		const { value: fio, errorMessage: fioError, handleBlur: fioBlur } = useField('fio',
-			yup
-				.string()
+			yup.string()
 				.trim()
 				.required('Введите ФИО')
 				.min(3, 'Минимум 3 символа')
 		);
 
 		const { value: tel, errorMessage: telError, handleBlur: telBlur } = useField('tel',
-			yup
-				.string()
+			yup.string()
 				.required('Введите телефон')
 				.min(11, 'Минимум 11 цифр')
 		);
 
 		const { value: sum, errorMessage: sumError, handleBlur: sumBlur } = useField('sum',
-			yup
-				.string()
+			yup.number()
 				.required('Введите сумму')
+				.min(0, "Сумма не может быть меньше 0")
 		);
-		const { value: state } = useField('state');
-
+		const { value: status } = useField('status');
 
 		const onSubmit = handleSubmit(async values => {
-			console.log(values)
+			await store.dispatch('requestAxiosModule/create', values)
+			emit('created');
 		})
 
 		return {
-			onSubmit, isSubmitting,
+			onSubmit,
 			fio, fioError, fioBlur,
 			tel, telError, telBlur,
 			sum, sumError, sumBlur,
-			state
+			status
 		}
 	}
 }
