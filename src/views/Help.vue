@@ -6,7 +6,7 @@
 
 <script>
 
-import appPage from "../AppPage";
+import appPage from "../components/ui/AppPage";
 
 
 export default {

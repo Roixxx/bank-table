@@ -1,10 +1,13 @@
 <template>
-	<app-page title="Список заявок">
+
+	<app-loader v-if="loading"/>
+	<app-page v-else title="Список заявок">
 
 		<template #header>
 			<button class="btn primary" @click="modal = true">Создать</button>
 		</template>
 
+		<requestFilter v-model="filter"/>
 		<requestTable :requests="requests"/>
 
 		<teleport to="body">
@@ -17,12 +20,14 @@
 
 <script>
 
-import appPage from "../AppPage";
+import appPage from "../components/ui/AppPage";
 import requestTable from "../components/request/RequestTable";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import AppModal from "../components/ui/AppModal";
 import requestModalBody from "../components/request/RequestModalBody";
 import { useStore } from "vuex";
+import AppLoader from "../components/ui/AppLoader";
+import requestFilter from "../components/request/RequestFilter";
 
 
 
@@ -32,11 +37,35 @@ export default {
 	setup() {
 		const store = useStore();
 		const modal = ref(false);
+		const filter = ref({});
+		let loading  = ref(false);
 
-		const requests = computed(() => store.getters["requestAxiosModule/requests"])
+		onMounted(async () => {
+			loading.value = true;
+			await store.dispatch('requestAxiosModule/load');
+			loading.value = false;
+		})
+
+		const requests = computed(() => {
+
+			return store.getters["requestAxiosModule/requests"]
+				.filter(item => {
+					if (filter.value.name) {
+						return item.fio.includes(filter.value.name);
+					}
+					return item;
+				})
+				.filter(item => {
+					if (filter.value.status) {
+						return filter.value.status === item.status;
+					}
+					return item;
+				})
+
+		})
 
 		return {
-			modal, requests
+			modal, requests, loading, filter
 		}
 	},
 
@@ -44,7 +73,9 @@ export default {
 		appPage,
 		requestTable,
 		AppModal,
-		requestModalBody
+		requestModalBody,
+		AppLoader,
+		requestFilter,
 	}
 }
 

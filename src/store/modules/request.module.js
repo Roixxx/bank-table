@@ -33,7 +33,6 @@ export default {
 			await axios.post(`/requests.json?auth=${token}`, payload)
 				.then(res => {
 
-					console.log(res.data);
 					commit('addRequest', {...payload, id: res.data.name})
 
 					dispatch('setMessage', {
@@ -48,7 +47,37 @@ export default {
 						type: 'danger',
 					}, {root: true})
 				]);
+		},
 
-		}
+		async load({commit, dispatch}) {
+			const token = store.getters['authModule/token'];
+
+			await axios.get(`/requests.json?auth=${token}`)
+				.then( res => {
+					const requests = Object.keys(res.data).map(id => ({...res.data[id], id}));
+					commit('setRequests', requests)
+				})
+				.catch( e => [
+					dispatch('setMessage', {
+						value: e.message,
+						type: 'danger',
+					}, {root: true})
+				]);
+		},
+
+		async loadById( {commit, dispatch}, id ) {
+			const token = store.getters['authModule/token'];
+			let data = null;
+
+			await axios.get(`/requests/${id}.json?auth=${token}`)
+				.then( res => data = res.data)
+				.catch( e => [
+					dispatch('setMessage', {
+						value: e.message,
+						type: 'danger',
+					}, {root: true})
+				]);
+			return data;
+		},
 	}
 }

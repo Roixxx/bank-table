@@ -77,7 +77,7 @@ export default {
 		const { value: status } = useField('status');
 
 		const onSubmit = handleSubmit(async values => {
-			await store.dispatch('requestAxiosModule/create', values)
+			await store.dispatch('requestAxiosModule/create', values);
 			emit('created');
 		})
 
