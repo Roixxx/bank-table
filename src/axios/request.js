@@ -5,8 +5,10 @@ const requestAxios = axios.create({
 	baseURL: process.env.VUE_APP_FB_URL
 })
 
+
 // если пропала авторизация
-axios.interceptors.response.use(null, err => {
+requestAxios.interceptors.response.use(null, err => {
+	console.log('da')
 	if (err.response.status === 401) {
 		router.push('/auth?msg=auth');
 	}
