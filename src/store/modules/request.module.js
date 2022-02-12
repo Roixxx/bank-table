@@ -79,5 +79,41 @@ export default {
 				]);
 			return data;
 		},
+
+		async remove( {dispatch}, id ) {
+			const token = store.getters['authModule/token'];
+
+			await axios.delete(`/requests/${id}.json?auth=${token}`)
+				.then( () => {
+					dispatch('setMessage', {
+						value: 'Заявка удалена',
+						type: 'primary'
+					}, {root: true})
+				})
+				.catch( e => [
+					dispatch('setMessage', {
+						value: e.message,
+						type: 'danger',
+					}, {root: true})
+				]);
+		},
+
+		async update( { dispatch }, request ) {
+			const token = store.getters['authModule/token'];
+
+			await axios.put(`/requests/${request.id}.json?auth=${token}`, request)
+				.then( () => {
+					dispatch('setMessage', {
+						value: 'Заявка обновлена',
+						type: 'primary'
+					}, {root: true})
+				})
+				.catch( e => [
+					dispatch('setMessage', {
+						value: e.message,
+						type: 'danger',
+					}, {root: true})
+				]);
+		},
 	}
 }

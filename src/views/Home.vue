@@ -4,7 +4,7 @@
 	<app-page v-else title="Список заявок">
 
 		<template #header>
-			<button class="btn primary" @click="modal = true">Создать</button>
+			<button class="btn primary" @click="modal = true">Создать заявку</button>
 		</template>
 
 		<requestFilter v-model="filter"/>

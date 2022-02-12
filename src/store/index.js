@@ -13,12 +13,16 @@ export default createStore({
 	state() {
 		return {
 			message: null,
+			sidebar: false,
 		}
 	},
 
 	getters: {
 		message(state) {
 			return state.message;
+		},
+		sidebar(state) {
+			return state.sidebar;
 		}
 	},
 	mutations: {
@@ -27,6 +31,12 @@ export default createStore({
 		},
 		clearMessage(state) {
 			state.message = null;
+		},
+		openSidebar(state) {
+			state.sidebar = true;
+		},
+		closeSidebar(state) {
+			state.sidebar = false;
 		}
 	},
 	actions: {

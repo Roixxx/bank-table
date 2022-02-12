@@ -8,7 +8,7 @@ const requestAxios = axios.create({
 
 // если пропала авторизация
 requestAxios.interceptors.response.use(null, err => {
-	console.log('da')
+
 	if (err.response.status === 401) {
 		router.push('/auth?msg=auth');
 	}

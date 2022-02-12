@@ -2,7 +2,7 @@
 
 	<form class="card" @submit.prevent="onSubmit">
 
-		<h1>Войти в хату &#128682;</h1>
+		<h1>Войти в систему</h1>
 
 		<div :class="['form-control', {invalid: pError}]">
 			<label>
@@ -18,6 +18,8 @@
 				<small v-if="pError"> {{ pError }} </small>
 			</label>
 		</div>
+
+		<p>Аккаунт для теста: vosroix@gmail.com, 12345678</p>
 
 		<button class="btn primary" type="submit" :disabled="isSubmitting">Войти</button>
 	</form>

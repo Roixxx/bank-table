@@ -9,7 +9,7 @@
 				<router-link to="/help">Помощь</router-link>
 			</li>
 			<li>
-				<a href="#">Сообщения</a>
+				<a href="#" @click.prevent="openSidebar">Сообщения</a>
 			</li>
 			<li>
 				<a href="#" @click.prevent="logout">Выход</a>
@@ -27,11 +27,15 @@ export default {
 		const router = useRouter();
 		const store = useStore();
 
+		const openSidebar = () => store.commit('openSidebar');
+		const logout = () => {
+			store.commit('authModule/logout');
+			router.push('/auth')
+		}
+
 		return {
-			logout: () => {
-				store.commit('authModule/logout');
-				router.push('/auth')
-			}
+			logout,
+			openSidebar,
 		}
 	}
 }

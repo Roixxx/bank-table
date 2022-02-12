@@ -6,20 +6,20 @@
 		<p><strong>Сумма:</strong> {{ currency(request.sum) }}</p>
 		<p><strong>Статус:</strong> <AppStatus :type="request.status"/></p>
 
-		<div class="form-control">
-			<label>
-				Обновть статус:
-				<select v-model="status">
-					<option value="active">Активен</option>
-					<option value="pending">Выполняется</option>
-					<option value="done">Завершён</option>
-					<option value="cancelled">Отменён</option>
-				</select>
-			</label>
+		<p><strong>Обновить статус:</strong></p>
+		<div class="form-control upd-status">
+
+			<select v-model="status">
+				<option value="active">Активен</option>
+				<option value="pending">Выполняется</option>
+				<option value="done">Завершён</option>
+				<option value="cancelled">Отменён</option>
+			</select>
+
 		</div>
 
 		<button class="btn primary" @click="update" v-if="hasChanges">Обновить</button>
-		<button class="btn danger" @click="remove">Удалить</button>
+		<button class="btn danger" @click="remove">Удалить заявку</button>
 
 	</AppPage>
 
@@ -32,7 +32,7 @@
 <script>
 
 import AppPage from "../components/ui/AppPage";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import AppLoader from "../components/ui/AppLoader";
@@ -41,21 +41,27 @@ import { currency } from "../utils/currency";
 
 
 
+
 export default {
 
 	setup() {
 		const route = useRoute();
-		const store = useStore()
+		const router = useRouter();
+		const store = useStore();
 		const loading = ref(false);
 		const id = route.params.id;
 		const status = ref();
 		let request = ref(null);
 
-		const remove = () => {
-
+		const remove = async () => {
+			await store.dispatch('requestAxiosModule/remove', id)
+				.then(() => router.push('/'))
 		}
 
-		const update = () => {
+		const update = async () => {
+			const data = {...request.value, status: status.value, id: id}
+			await store.dispatch('requestAxiosModule/update', data);
+			request.value.status = status.value;
 
 		}
 

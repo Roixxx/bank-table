@@ -2,12 +2,12 @@
 	<div class="filter">
 
 		<div class="form-control">
-			<input v-model="name" type="text" placeholder="ФИО">
+			<input v-model="name" type="text" placeholder="Поиск по ФИО">
 		</div>
 
 		<div class="form-control">
 			<select v-model="status">
-				<option disabled selected>Выберите статус</option>
+				<option value="" disabled>Выбрать статус</option>
 				<option value="done">Завершён</option>
 				<option value="cancelled">Отменён</option>
 				<option value="active">Активен</option>
@@ -15,7 +15,7 @@
 			</select>
 		</div>
 
-		<button class="btn warning" v-if="isActive" @click="reset"> Очистить </button>
+		<button class="btn warning" v-if="isActive" @click="reset"> Сбросить фильтры </button>
 	</div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
 
 		const reset = function() {
 			name.value = '';
-			status.value = null;
+			status.value = '';
 		}
 
 		watch([name, status], values => {
