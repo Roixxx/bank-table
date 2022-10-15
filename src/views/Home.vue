@@ -22,7 +22,7 @@
 
 import appPage from "../components/ui/AppPage";
 import requestTable from "../components/request/RequestTable";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import AppModal from "../components/ui/AppModal";
 import requestModalBody from "../components/request/RequestModalBody";
 import { useStore } from "vuex";
